@@ -1,20 +1,12 @@
 module.exports = function check(str, bracketsConfig) {
-  if (str.length <= 1)
-  return false
-let m, ch
-let arr = []
-let ob = ['[', '{', '(']
-let cb = [']', '}', ')']
-for (let i = 0; i < str.length; i++) {
-  ch = str[i]
-  if (cb.indexOf(ch) > -1) {
-    m = ob[cb.indexOf(ch)]
-    if (arr.length == 0 || (arr.pop() != m)) {
-      return false
+  let arr = str.split('');
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < bracketsConfig.length; j++) {
+      if (arr.slice(i, (i + 2)).join() === bracketsConfig[j].join()) { 
+        arr.splice(i, 2);
+        i -= 2;
+      }
     }
-  } else {
-    arr.push(ch)
   }
-}
-return (arr.length == 0)
+  return arr.length === 0 ? true : false;
 }
